@@ -98,8 +98,8 @@ class minesweeper:
                 x, y = cur_btn.x, cur_btn.y
                 for dx in [-1, 0, 1]:
                     for dy in [-1, 0, 1]:
-                        if not abs(dx - dy) == 1:
-                            continue
+                        # if not abs(dx - dy) == 1:
+                        #     continue
 
                         next_btn = self.buttons[x+dx][y+dy]
                         if not next_btn.is_open and 1 <= next_btn.x <= minesweeper.row and \
