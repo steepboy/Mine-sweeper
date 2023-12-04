@@ -1,6 +1,6 @@
 import tkinter as tk
 from random import shuffle
-from tkinter.messagebox import showinfo
+from tkinter.messagebox import showinfo, showerror
 
 colors = {1: 'blue', 2: 'green', 3: 'yellow', 4: 'orange', 5: 'red', 6: 'pink', 7: 'purple', 8: 'black'}
 
@@ -34,9 +34,20 @@ class minesweeper:
             for j in range(minesweeper.col + 2):
                 btn = MyButton(minesweeper.window, width=3, font='Calibri 15', x=i, y=j)
                 btn.config(command=lambda button=btn: self.click(button))
+                btn.bind("<Button-3>",self.right_click)
                 temp.append(btn)
             self.buttons.append(temp)
         print("Start")
+
+    def right_click(self, event):
+        cur_btn = event.widget
+        if cur_btn['state'] == 'normal':
+            cur_btn['state'] = 'disabled'
+            cur_btn['text'] = '🚩'
+            cur_btn['disabledforeground'] = 'red'
+        elif cur_btn['text'] == '🚩':
+            cur_btn['state'] = 'normal'
+            cur_btn['text'] = ''
 
     def click(self, clicked_button):
 
@@ -101,15 +112,37 @@ class minesweeper:
         self.__init__()
         self.create_widgets()
         minesweeper.is_first_click = True
+        minesweeper.is_game_over = False
 
-    def create_setting_win(self):
+    def create_settings_win(self):
         win_settings = tk.Toplevel(self.window)
+        win_settings.wm_title("Settings")
+        tk.Label(win_settings, text='Rows').grid(row=0, column=0)
         row_entry = tk.Entry(win_settings)
+        row_entry.insert(0, minesweeper.row)
         row_entry.grid(row=0, column=1, padx=20, pady=20)
+        tk.Label(win_settings, text='Columns').grid(row=1, column=0)
         col_entry = tk.Entry(win_settings)
-        col_entry.grid(row=1, column=1)
+        col_entry.insert(0, minesweeper.col)
+        col_entry.grid(row=1, column=1, padx=20, pady=20)
+        tk.Label(win_settings, text='Mines').grid(row=2, column=0)
         mines_entry = tk.Entry(win_settings)
-        mines_entry.grid(row=2, column=1)
+        mines_entry.insert(0, minesweeper.mines)
+        mines_entry.grid(row=2, column=1, padx=20, pady=20)
+        apply_btn = tk.Button(win_settings, text='Apply', command=lambda :self.change_settings(row_entry, col_entry, mines_entry))
+        apply_btn.grid(row=3, column=0, columnspan=2, padx=20, pady=20)
+
+    def change_settings(self, row, col, mines):
+        try:
+            int(row.get()), int(col.get()), int(mines.get())
+        except ValueError:
+            showerror("Error", "Wrong settings input!")
+            return
+        minesweeper.row = int(row.get())
+        minesweeper.col = int(col.get())
+        minesweeper.mines = int(mines.get())
+        self.replay()
+
     def create_widgets(self):
 
         menubar = tk.Menu(self.window)
