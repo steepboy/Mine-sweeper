@@ -21,3 +21,4 @@ for i in range(row_num):
         cell.grid(row=i, column=j)
 
 window.mainloop()
+#h
