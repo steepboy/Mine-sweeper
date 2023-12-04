@@ -18,7 +18,7 @@ def start_game():
     root.destroy()
 
 def open_settings():
-    print("Настройки")
+    print("Налаштування")
 
 def quit_game():
     root.quit()
@@ -32,13 +32,13 @@ def create_main_screen():
     leb = tk.Label(root, text="САПЕР", font=("Arial", 30), fg="blue", height=2)
     leb.pack()
 
-    start_button = tk.Button(root, text="Старт", command=start_game, height=2, width=10)
+    start_button = tk.Button(root, text="Старт", command=start_game, height=2, width=12)
     start_button.pack()
 
-    settings_button = tk.Button(root, text="Настройки", command=open_settings, height=2, width=10)
+    settings_button = tk.Button(root, text="Налаштування", command=open_settings, height=2, width=12)
     settings_button.pack()
 
-    quit_button = tk.Button(root, text="Выход", command=quit_game, height=2, width=10)
+    quit_button = tk.Button(root, text="Вихід", command=quit_game, height=2, width=12)
     quit_button.pack()
 
 center_window(root)
