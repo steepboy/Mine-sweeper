@@ -9,6 +9,6 @@ lang_file_path = 'agrs/lang.txt'
 lang_value = read_lang_file(lang_file_path)
 
 if lang_value == '1':
-    subprocess.Popen(['python', 'ua/menu.py'])
+    subprocess.run(['python', 'menu_ua.py'])
 else:
-    subprocess.Popen(['python', 'eng/menu.py'])
+    subprocess.run(['python', 'menu.py'])

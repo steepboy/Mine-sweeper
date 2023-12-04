@@ -18,9 +18,10 @@ class MyButton(tk.Button):
 
 class minesweeper:
     window = tk.Tk()
-    row = 5
-    col = 6
-    mines = 7
+    window.title("Minesweeper -- Debug mode")
+    row = 10
+    col = 10
+    mines = 30
 
     def __init__(self):
         self.buttons = []

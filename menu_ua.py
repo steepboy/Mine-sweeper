@@ -1,7 +1,8 @@
 import tkinter as tk
 import subprocess
-import time
 import webbrowser
+from tkinter.messagebox import showinfo
+
 
 def center_window(window):
     window.update_idletasks()
@@ -13,39 +14,50 @@ def center_window(window):
 
 def start_game():
     print("Старт")
-    process = subprocess.Popen(["python", "ua/launcher.py"])
-    process.wait()
-    time.sleep(0.4)
     root.destroy()
+    subprocess.run(["python", "pt_ua.py"])
 
 def open_settings():
     def ua():
-        with open('../agrs/lang.txt', 'w') as file:
+        with open('agrs/lang.txt', 'w') as file:
             file.write(str(1))
+        showinfo("Мову змінено!", "Для продовження\nНатисніть 'Ok'")
+        root.destroy()
+        subprocess.run(["python", "main.py"])
+
     def eng():
-            with open('../agrs/lang.txt', 'w') as file:
+            with open('agrs/lang.txt', 'w') as file:
                 file.write(str(2))
+            showinfo("Language reset!", "For continue\nPress 'Ok'")
+            root.destroy()
+            subprocess.run(["python", "main.py"])
     def ru():
         webbrowser.open('https://www.youtube.com/watch?v=Wx7vo__48oE')
+
+    def debug():
+        subprocess.run(["python", "part.py"])
 
     print("Налаштування")
     new_window = tk.Toplevel(root)
     new_window.title("Налаштування")
-    new_window.geometry("300x500")
+    new_window.geometry("300x200")
     center_window(new_window)
     tk.Label(new_window, text="Мова", bg="grey", font=("Arial", 15)).pack(side="top", fill="x", padx=10, pady=10)
 
     frame1 = tk.Frame(new_window)
     frame1.pack()
 
-    btn1 = tk.Button(frame1, text="Укр", command=ua)
+    btn1 = tk.Button(frame1, text="UA", command=ua)
     btn1.pack(side=tk.LEFT)
 
-    btn2 = tk.Button(frame1, text="eng", command=eng)
+    btn2 = tk.Button(frame1, text="UK", command=eng)
     btn2.pack(side=tk.LEFT)
 
-    btn3 = tk.Button(frame1, text="Рус", command=ru)
+    btn3 = tk.Button(frame1, text="RU", command=ru)
     btn3.pack(side=tk.LEFT)
+
+    btn_deb = tk.Button(new_window, text="Debug", command=debug)
+    btn_deb.pack(side=tk.BOTTOM)
 
 def global_args():
     lang = 1
@@ -54,7 +66,7 @@ def quit_game():
     root.quit()
 
 root = tk.Tk()
-root.title("САПЕР")
+root.title("Minesweeper")
 root.geometry("300x300")
 root.resizable(width=False, height=False)
 
