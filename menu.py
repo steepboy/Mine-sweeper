@@ -14,7 +14,7 @@ def start_game():
     print("Старт")
     process = subprocess.Popen(["python", "launcher.py"])
     process.wait()
-    time.sleep(0.3)
+    time.sleep(0.4)
     root.destroy()
 
 def open_settings():

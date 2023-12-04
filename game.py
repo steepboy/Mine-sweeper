@@ -2,8 +2,8 @@ import tkinter as tk
 
 window = tk.Tk()
 window.title("Гра")
-row = 5
-columns = 5
+row = 10
+columns = 7
 
 buttons = []
 for i in range(row):

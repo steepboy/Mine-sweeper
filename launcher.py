@@ -1,2 +1,5 @@
 import subprocess
-subprocess.Popen(['python', 'game.py'])
+def start_menu():
+    subprocess.Popen(['python', 'game.py'])
+
+start_menu()
