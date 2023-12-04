@@ -2,7 +2,7 @@ import tkinter as tk
 from random import shuffle
 from tkinter.messagebox import showinfo, showerror
 
-colors = {1: 'blue', 2: 'green', 3: 'yellow', 4: 'orange', 5: 'red', 6: 'pink', 7: 'purple', 8: 'black'}
+colors = {1: 'blue', 2: 'green', 3: 'gold', 4: 'orange', 5: 'red', 6: 'pink', 7: 'purple', 8: 'black'}
 
 class MyButton(tk.Button):
 
@@ -74,12 +74,31 @@ class minesweeper:
         else:
             color = colors.get(clicked_button.count_bomb, 'black')
             clicked_button.config(text=clicked_button.count_bomb, disabledforeground=color)
-            if clicked_button.count_bomb:
+            open_count = 1
+            for i in range(1, minesweeper.row + 1):
+                for j in range(1, minesweeper.col + 1):
+                    btn = self.buttons[i][j]
+                    if btn['relief'] == tk.SUNKEN:
+                        open_count += 1
+            if open_count == minesweeper.col * minesweeper.row - minesweeper.mines:
+
+                for i in range(1, minesweeper.row + 1):
+                    for j in range(1, minesweeper.col + 1):
+                        btn = self.buttons[i][j]
+                        if btn.is_mine:
+                            btn['text'] = '*'
+                        btn.config(state='disabled')
+                        btn.config(relief=tk.SUNKEN)
+                minesweeper.is_game_over = True
+                showinfo("Game over!", "You Won!")
+            elif clicked_button.count_bomb:
                 clicked_button.config(text=clicked_button.count_bomb, disabledforeground=color)
             else:
                 self.breadth_first_search(clicked_button)
         clicked_button.config(state='disabled')
         clicked_button.config(relief=tk.SUNKEN)
+
+
 
     def breadth_first_search(self, btn: MyButton):
         queue = [btn]
