@@ -1,7 +1,7 @@
 import tkinter as tk
 from random import shuffle
 
-colors = {1: 'blue', 2: 'green', 3: 'yellow', 4: 'orange', 5: 'red', 6: 'pink', 7: 'purple', 8: 'black'}
+colors = {1: 'blue', 2: 'green', 3: '#d6a400', 4: '#ffa200', 5: 'red', 6: 'pink', 7: 'purple', 8: 'black'}
 
 
 class MyButton(tk.Button):
@@ -21,8 +21,8 @@ class MyButton(tk.Button):
 
 class minesweeper:
     window = tk.Tk()
-    row = 6
-    col = 8
+    row = 4
+    col = 5
     mines = 3
 
     def __init__(self):
@@ -125,7 +125,7 @@ class minesweeper:
 
     def count_mines_in_buttons(self):
         for i in range(1, minesweeper.row + 1):
-            for j in range(1, minesweeper.row + 1):
+            for j in range(1, minesweeper.col + 1):
                 btn = self.buttons[i][j]
                 count_bomb = 0
                 if not btn.is_mine:
