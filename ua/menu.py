@@ -1,6 +1,7 @@
 import tkinter as tk
 import subprocess
 import time
+import webbrowser
 
 def center_window(window):
     window.update_idletasks()
@@ -12,12 +13,21 @@ def center_window(window):
 
 def start_game():
     print("Старт")
-    process = subprocess.Popen(["python", "launcher.py"])
+    process = subprocess.Popen(["python", "ua/launcher.py"])
     process.wait()
     time.sleep(0.4)
     root.destroy()
 
 def open_settings():
+    def ua():
+        with open('../agrs/lang.txt', 'w') as file:
+            file.write(str(1))
+    def eng():
+            with open('../agrs/lang.txt', 'w') as file:
+                file.write(str(2))
+    def ru():
+        webbrowser.open('https://www.youtube.com/watch?v=Wx7vo__48oE')
+
     print("Налаштування")
     new_window = tk.Toplevel(root)
     new_window.title("Налаштування")
@@ -28,15 +38,17 @@ def open_settings():
     frame1 = tk.Frame(new_window)
     frame1.pack()
 
-    btn1 = tk.Button(frame1, text="Кнопка 1")
+    btn1 = tk.Button(frame1, text="Укр", command=ua)
     btn1.pack(side=tk.LEFT)
 
-    btn2 = tk.Button(frame1, text="Кнопка 2")
+    btn2 = tk.Button(frame1, text="eng", command=eng)
     btn2.pack(side=tk.LEFT)
 
-    btn3 = tk.Button(frame1, text="Кнопка 3")
+    btn3 = tk.Button(frame1, text="Рус", command=ru)
     btn3.pack(side=tk.LEFT)
 
+def global_args():
+    lang = 1
 
 def quit_game():
     root.quit()
