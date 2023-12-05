@@ -34,6 +34,7 @@ def open_settings():
             subprocess.run(["python", "main.py"])
     def ru():
         webbrowser.open('https://www.youtube.com/watch?v=Wx7vo__48oE')
+        root.destroy()
 
     def debug():
         subprocess.run(["python", "part.py"])
