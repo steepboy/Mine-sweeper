@@ -100,6 +100,22 @@ class minesweeper:
                 clicked_button.config(text=clicked_button.count_bomb, disabledforeground=color)
             else:
                 self.breadth_first_search(clicked_button)
+                open_count = 0
+                for i in range(1, minesweeper.row + 1):
+                    for j in range(1, minesweeper.col + 1):
+                        btn = self.buttons[i][j]
+                        if btn['relief'] == tk.SUNKEN:
+                            open_count += 1
+                if open_count == minesweeper.col * minesweeper.row - minesweeper.mines:
+                    for i in range(1, minesweeper.row + 1):
+                        for j in range(1, minesweeper.col + 1):
+                            btn = self.buttons[i][j]
+                            if btn.is_mine:
+                                btn['text'] = '*'
+                            btn.config(state='disabled')
+                            btn.config(relief=tk.SUNKEN)
+                    minesweeper.is_game_over = True
+                    showinfo((language["game_over"]), (language["you_win"]))
         clicked_button.config(state='disabled')
         clicked_button.config(relief=tk.SUNKEN)
 
