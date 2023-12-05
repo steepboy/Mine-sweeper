@@ -72,13 +72,12 @@ class minesweeper:
                     btn = self.buttons[i][j]
                     if btn.is_mine:
                         btn['text'] = '*'
-                    btn.configure(state='disabled')
+                    btn.config(state='disabled')
 
         else:
             color = colors.get(clicked_button.count_bomb, 'black')
             clicked_button.config(text=clicked_button.count_bomb, disabledforeground=color)
             open_count = 1
-
             for i in range(1, minesweeper.row + 1):
                 for j in range(1, minesweeper.col + 1):
                     btn = self.buttons[i][j]
@@ -102,6 +101,8 @@ class minesweeper:
                 self.breadth_first_search(clicked_button)
         clicked_button.config(state='disabled')
         clicked_button.config(relief=tk.SUNKEN)
+
+
 
     def breadth_first_search(self, btn: MyButton):
         queue = [btn]
@@ -151,19 +152,25 @@ class minesweeper:
         mines_entry = tk.Entry(win_settings)
         mines_entry.insert(0, minesweeper.mines)
         mines_entry.grid(row=2, column=1, padx=20, pady=20)
-        apply_btn = tk.Button(win_settings, text='Apply', command=lambda :self.change_settings(row_entry, col_entry, mines_entry))
-        apply_btn.grid(row=3, column=0, columnspan=2, padx=20, pady=20)
+        var = tk.IntVar()
+        hard_entry = tk.Checkbutton(win_settings, variable=var)
+        hard_entry.grid(row=3, column=1, padx=20, pady=20)
+        tk.Label(win_settings, text='Hard mode').grid(row=3, column=0)
+        apply_btn = tk.Button(win_settings, text='Apply', command=lambda: self.change_settings(row_entry, col_entry, mines_entry, var))
+        apply_btn.grid(row=4, column=0, columnspan=2, padx=20, pady=20)
 
-
-    def change_settings(self, row, col, mines):
+    def change_settings(self, row, col, mines, hard):
         try:
             int(row.get()), int(col.get()), int(mines.get())
         except ValueError:
             showerror("Error", "Wrong settings input!")
             return
+
         minesweeper.row = int(row.get())
         minesweeper.col = int(col.get())
         minesweeper.mines = int(mines.get())
+        if hard.get() == 1:
+            minesweeper.mines = minesweeper.row * minesweeper.col - 2
         self.replay()
 
     def create_widgets(self):
