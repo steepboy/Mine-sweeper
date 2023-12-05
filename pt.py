@@ -2,6 +2,7 @@ import tkinter as tk
 from random import shuffle
 from tkinter.messagebox import showinfo, showerror
 import subprocess
+from lang import *
 
 colors = {1: 'blue', 2: 'green', 3: 'gold', 4: 'orange', 5: 'red', 6: 'pink', 7: 'purple', 8: 'black'}
 
@@ -66,19 +67,18 @@ class minesweeper:
             clicked_button.config(text='*', background='red', disabledforeground='black')
             clicked_button.is_open = True
             minesweeper.is_game_over = True
-            showinfo("Game over!", "You lost!")
+            showinfo((language["game_over"]), (language["you_lost"]))
             for i in range(1, minesweeper.row + 1):
                 for j in range(1, minesweeper.col + 1):
                     btn = self.buttons[i][j]
                     if btn.is_mine:
                         btn['text'] = '*'
-                    btn.configure(state='disabled')
+                    btn.config(state='disabled')
 
         else:
             color = colors.get(clicked_button.count_bomb, 'black')
             clicked_button.config(text=clicked_button.count_bomb, disabledforeground=color)
             open_count = 1
-
             for i in range(1, minesweeper.row + 1):
                 for j in range(1, minesweeper.col + 1):
                     btn = self.buttons[i][j]
@@ -94,7 +94,7 @@ class minesweeper:
                         btn.config(state='disabled')
                         btn.config(relief=tk.SUNKEN)
                 minesweeper.is_game_over = True
-                showinfo("Game over!", "You Won!")
+                showinfo((language["game_over"]), (language["you_win"]))
 
             elif clicked_button.count_bomb:
                 clicked_button.config(text=clicked_button.count_bomb, disabledforeground=color)
@@ -102,6 +102,8 @@ class minesweeper:
                 self.breadth_first_search(clicked_button)
         clicked_button.config(state='disabled')
         clicked_button.config(relief=tk.SUNKEN)
+
+
 
     def breadth_first_search(self, btn: MyButton):
         queue = [btn]
@@ -138,32 +140,38 @@ class minesweeper:
 
     def create_settings_win(self):
         win_settings = tk.Toplevel(self.window)
-        win_settings.wm_title("Settings")
-        tk.Label(win_settings, text='Rows').grid(row=0, column=0)
+        win_settings.wm_title(language["settings"])
+        tk.Label(win_settings, text=(language["row"])).grid(row=0, column=0)
         row_entry = tk.Entry(win_settings)
         row_entry.insert(0, minesweeper.row)
         row_entry.grid(row=0, column=1, padx=20, pady=20)
-        tk.Label(win_settings, text='Columns').grid(row=1, column=0)
+        tk.Label(win_settings, text=(language["col"])).grid(row=1, column=0)
         col_entry = tk.Entry(win_settings)
         col_entry.insert(0, minesweeper.col)
         col_entry.grid(row=1, column=1, padx=20, pady=20)
-        tk.Label(win_settings, text='Mines').grid(row=2, column=0)
+        tk.Label(win_settings, text=(language["mines"])).grid(row=2, column=0)
         mines_entry = tk.Entry(win_settings)
         mines_entry.insert(0, minesweeper.mines)
         mines_entry.grid(row=2, column=1, padx=20, pady=20)
-        apply_btn = tk.Button(win_settings, text='Apply', command=lambda :self.change_settings(row_entry, col_entry, mines_entry))
-        apply_btn.grid(row=3, column=0, columnspan=2, padx=20, pady=20)
+        var = tk.IntVar()
+        hard_entry = tk.Checkbutton(win_settings, variable=var)
+        hard_entry.grid(row=3, column=1, padx=20, pady=20)
+        tk.Label(win_settings, text=language["hard_mode"]).grid(row=3, column=0)
+        apply_btn = tk.Button(win_settings, text=(language["save"]), command=lambda: self.change_settings(row_entry, col_entry, mines_entry, var))
+        apply_btn.grid(row=4, column=0, columnspan=2, padx=20, pady=20)
 
-
-    def change_settings(self, row, col, mines):
+    def change_settings(self, row, col, mines, hard):
         try:
             int(row.get()), int(col.get()), int(mines.get())
         except ValueError:
             showerror("Error", "Wrong settings input!")
             return
+
         minesweeper.row = int(row.get())
         minesweeper.col = int(col.get())
         minesweeper.mines = int(mines.get())
+        if hard.get() == 1:
+            minesweeper.mines = minesweeper.row * minesweeper.col - 2
         self.replay()
 
     def create_widgets(self):
@@ -172,10 +180,10 @@ class minesweeper:
         self.window.config(menu=menubar)
 
         settings_menu = tk.Menu(menubar, tearoff=0)
-        settings_menu.add_command(label='Reload game', command=self.replay)
-        settings_menu.add_command(label='Settings', command=self.create_settings_win)
-        settings_menu.add_command(label='Exit', command=self.exit_menu)
-        menubar.add_cascade(label="Menu", menu=settings_menu)
+        settings_menu.add_command(label=(language["restart_game"]), command=self.replay)
+        settings_menu.add_command(label=(language["settings"]), command=self.create_settings_win)
+        settings_menu.add_command(label=(language["quit"]), command=self.exit_menu)
+        menubar.add_cascade(label=(language["menu"]), menu=settings_menu)
         count = 1
         for i in range(1, minesweeper.row + 1):
             for j in range(1, minesweeper.col + 1):
