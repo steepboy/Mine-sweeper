@@ -39,6 +39,9 @@ def open_settings():
     def debug():
         subprocess.run(["python", "part.py"])
 
+    def theme():
+        showinfo("Themes", "Comming soon!")
+
     print("Налаштування")
     new_window = tk.Toplevel(root)
     new_window.title(language["settings"])
@@ -60,6 +63,8 @@ def open_settings():
 
     btn_deb = tk.Button(new_window, text="Debug", command=debug)
     btn_deb.pack(side=tk.BOTTOM)
+    btn_thm = tk.Button(new_window, text=(language["thm"]), command=theme)
+    btn_thm.pack(side=tk.BOTTOM)
 
 def global_args():
     lang = 1

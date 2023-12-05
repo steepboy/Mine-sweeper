@@ -17,6 +17,7 @@ ua = {
     "you_win": "Ви Виграли!",
     "hard_mode": "НЕРЕАЛЬНИЙ МОД",
     "menu": "Меню",
+    "thm": "Темы",
 }
 
 uk = {
@@ -38,6 +39,7 @@ uk = {
     "you_win": "You Won!",
     "hard_mode": "HARD MODE",
     "menu": "Menu",
+    "thm": "Themes",
 }
 
 
