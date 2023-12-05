@@ -2,6 +2,7 @@ import tkinter as tk
 import subprocess
 import webbrowser
 from tkinter.messagebox import showinfo
+from lang import *
 
 
 def center_window(window):
@@ -39,10 +40,10 @@ def open_settings():
 
     print("Налаштування")
     new_window = tk.Toplevel(root)
-    new_window.title("Settings")
+    new_window.title(language["settings"])
     new_window.geometry("300x200")
     center_window(new_window)
-    tk.Label(new_window, text="Language", bg="grey", font=("Arial", 15)).pack(side="top", fill="x", padx=10, pady=10)
+    tk.Label(new_window, text=(language["lang"]), bg="grey", font=("Arial", 15)).pack(side="top", fill="x", padx=10, pady=10)
 
     frame1 = tk.Frame(new_window)
     frame1.pack()
@@ -71,16 +72,16 @@ root.geometry("300x300")
 root.resizable(width=False, height=False)
 
 def create_main_screen():
-    leb = tk.Label(root, text="MINESWEEPER", font=("Arial", 30), fg="blue", height=2)
+    leb = tk.Label(root, text=(language["minesweeper"]), font=("Arial", 30), fg="blue", height=2)
     leb.pack()
 
-    start_button = tk.Button(root, text="Start", command=start_game, height=2, width=12)
+    start_button = tk.Button(root, text=(language["start"]), command=start_game, height=2, width=12)
     start_button.pack()
 
-    settings_button = tk.Button(root, text="Settings", command=open_settings, height=2, width=12)
+    settings_button = tk.Button(root, text=(language["settings"]), command=open_settings, height=2, width=12)
     settings_button.pack()
 
-    quit_button = tk.Button(root, text="Exit", command=quit_game, height=2, width=12)
+    quit_button = tk.Button(root, text=(language["quit"]), command=quit_game, height=2, width=12)
     quit_button.pack()
 
 def call():

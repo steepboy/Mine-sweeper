@@ -30,15 +30,14 @@ uk = {
     "minesweeper": "MINESWEEPER",
 }
 
-def lang():
-    try:
-        with open('agrs/lang.txt', 'r') as file:
-            result = file.read()
-    except:
-        print("lang error")
-    if result == "1":
-        language = ua
-    else:
-        language = uk
-    print(language["start"])
-lang()
+
+try:
+    with open('agrs/lang.txt', 'r') as file:
+        result = file.read()
+except:
+    print("lang error")
+if result == "1":
+    language = ua
+else:
+    language = uk
+print(language["settings"])
