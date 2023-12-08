@@ -1,3 +1,4 @@
+import time
 import tkinter as tk
 import subprocess
 import webbrowser
@@ -36,6 +37,12 @@ def open_settings():
         webbrowser.open('https://www.youtube.com/watch?v=Wx7vo__48oE')
         root.destroy()
 
+    def by():
+        webbrowser.open('https://www.youtube.com/watch?v=jSwN2HvEdSg')
+        time.sleep(5)
+        webbrowser.open('https://i.ibb.co/bL8V713/photo-2023-12-08-20-56-15.jpg')
+        root.destroy()
+
     def debug():
         subprocess.run(["python", "part.py"])
 
@@ -60,6 +67,9 @@ def open_settings():
 
     btn3 = tk.Button(frame1, text="RU", command=ru)
     btn3.pack(side=tk.LEFT)
+
+    btn4 = tk.Button(frame1, text="BY", command=by)
+    btn4.pack(side=tk.LEFT)
 
     btn_deb = tk.Button(new_window, text="Debug", command=debug)
     btn_deb.pack(side=tk.BOTTOM)
